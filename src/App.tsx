@@ -129,8 +129,20 @@ const About = () => {
   );
 };
 
+interface FeatureItem {
+  text: string;
+  icon: any;
+  available?: boolean;
+}
+
+interface FeatureCategory {
+  title: string;
+  icon: any;
+  features: FeatureItem[];
+}
+
 const Experience = () => {
-  const categories = [
+  const categories: FeatureCategory[] = [
     {
       title: "Service Excellence",
       icon: <ShoppingBag size={24} />,
@@ -158,20 +170,20 @@ const Experience = () => {
       title: "Highlights",
       icon: <Star size={24} />,
       features: [
-        { text: "Artisan Coffee", icon: <Coffee size={14} /> },
-        { text: "Gourmet Desserts", icon: <Star size={14} /> },
-        { text: "Specialist Tea", icon: <Leaf size={14} /> },
-        { text: "Vegan Options", icon: <Leaf size={14} /> }
+        { text: "Artisan Coffee", icon: <Coffee size={14} />, available: true },
+        { text: "Gourmet Desserts", icon: <Star size={14} />, available: true },
+        { text: "Specialist Tea", icon: <Leaf size={14} />, available: true },
+        { text: "Vegan Options", icon: <Leaf size={14} />, available: true }
       ]
     },
     {
       title: "Convenience",
       icon: <CreditCard size={24} />,
       features: [
-        { text: "Credit / Debit Cards", icon: <CreditCard size={14} /> },
-        { text: "NFC Mobile Payments", icon: <CreditCard size={14} /> },
-        { text: "Dogs Welcome", icon: <Dog size={14} /> },
-        { text: "Urban Retreat", icon: <MapPin size={14} /> }
+        { text: "Credit / Debit Cards", icon: <CreditCard size={14} />, available: true },
+        { text: "NFC Mobile Payments", icon: <CreditCard size={14} />, available: true },
+        { text: "Dogs Welcome", icon: <Dog size={14} />, available: true },
+        { text: "Urban Retreat", icon: <MapPin size={14} />, available: true }
       ]
     }
   ];
