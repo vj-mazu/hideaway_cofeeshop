@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Coffee, MapPin, ArrowRight, X, PlayCircle } from 'lucide-react';
+import { Coffee, MapPin, ArrowRight, X, PlayCircle, Sun, ShoppingBag, Star, Sparkles, Briefcase, Dog, CreditCard, Laptop, Leaf, Wind, Users } from 'lucide-react';
 
 const InstagramIcon = ({ size = 24 }: { size?: number }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -44,10 +44,12 @@ const Navbar = () => {
         <div className="nav-logo">
           <h2>HIDEAWAY <span>COFFEE HOUSE</span></h2>
         </div>
-        <ul className="nav-links" style={{ display: window.innerWidth < 768 ? 'none' : 'flex' }}>
+        <ul className="nav-links">
           <li><a href="#home">Home</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#menu">Menu</a></li>
+          <li><a href="#experience">Features</a></li>
+          <li><a href="#reels">Reels</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
         <div className="nav-socials">
@@ -121,6 +123,106 @@ const About = () => {
           <a href="#menu" className="btn-primary" style={{ marginTop: '1rem', display: 'inline-flex', gap: '0.5rem', alignItems: 'center', textDecoration: 'none' }}>
             Learn More <ArrowRight size={18} />
           </a>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+const Experience = () => {
+  const categories = [
+    {
+      title: "Service Excellence",
+      icon: <ShoppingBag size={24} />,
+      features: [
+        { text: "Outdoor Seating", icon: <Sun size={14} />, available: true },
+        { text: "On-site Services", icon: <Briefcase size={14} />, available: true },
+        { text: "Takeaway & Dine-in", icon: <ShoppingBag size={14} />, available: true },
+        { text: "No Delivery", icon: <X size={14} />, available: false },
+        { text: "Wheelchair Accessible", icon: <Wind size={14} />, available: true },
+        { text: "No Accessible Car Park", icon: <X size={14} />, available: false }
+      ]
+    },
+    {
+      title: "Atmosphere",
+      icon: <Sparkles size={24} />,
+      features: [
+        { text: "Casual & Trendy", icon: <Sparkles size={14} />, available: true },
+        { text: "Solo & Work Friendly", icon: <Laptop size={14} />, available: true },
+        { text: "Dogs Welcome Inside", icon: <Dog size={14} />, available: true },
+        { text: "No Reservations", icon: <X size={14} />, available: false },
+        { text: "Tourist Friendly", icon: <Users size={14} />, available: true }
+      ]
+    },
+    {
+      title: "Highlights",
+      icon: <Star size={24} />,
+      features: [
+        { text: "Artisan Coffee", icon: <Coffee size={14} /> },
+        { text: "Gourmet Desserts", icon: <Star size={14} /> },
+        { text: "Specialist Tea", icon: <Leaf size={14} /> },
+        { text: "Vegan Options", icon: <Leaf size={14} /> }
+      ]
+    },
+    {
+      title: "Convenience",
+      icon: <CreditCard size={24} />,
+      features: [
+        { text: "Credit / Debit Cards", icon: <CreditCard size={14} /> },
+        { text: "NFC Mobile Payments", icon: <CreditCard size={14} /> },
+        { text: "Dogs Welcome", icon: <Dog size={14} /> },
+        { text: "Urban Retreat", icon: <MapPin size={14} /> }
+      ]
+    }
+  ];
+
+  return (
+    <section id="experience" className="experience">
+      <div className="container">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeIn}
+          className="menu-header-center"
+        >
+          <h2 className="heading-gold">The Hideaway Experience</h2>
+          <p style={{ color: 'var(--text-muted)' }}>Everything you need for the perfect afternoon.</p>
+        </motion.div>
+
+        <motion.div 
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="experience-grid"
+        >
+          {categories.map((cat, i) => (
+            <motion.div 
+              key={i}
+              variants={fadeIn}
+              className="experience-card"
+            >
+              <div className="experience-icon">{cat.icon}</div>
+              <h4>{cat.title}</h4>
+              <ul className="experience-list">
+                {cat.features.map((feat, j) => (
+                  <li key={j} style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '0.8rem',
+                    opacity: feat.available === false ? 0.5 : 1,
+                    textDecoration: feat.available === false ? 'line-through' : 'none'
+                  }}>
+                    <span style={{ color: feat.available === false ? 'var(--text-muted)' : 'var(--accent-gold)' }}>
+                      {feat.available === false ? <X size={14} /> : feat.icon}
+                    </span>
+                    {feat.text}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </section>
@@ -639,6 +741,7 @@ function App() {
           <About />
           <VisualMenu />
           <FullMenu />
+          <Experience />
           <SocialBuzz />
           <Footer onPrivacyClick={() => setPrivacyOpen(true)} />
         </motion.div>
