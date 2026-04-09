@@ -80,7 +80,12 @@ const Hero = () => {
     <section id="home" className="hero">
       <div className="hero-bg">
         {/* Placeholder image name for the storefront picture */}
-        <img src="/images/storefront.jpg" alt="Hideaway Coffee House Storefront" onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&q=80'; }} />
+        <img 
+          src="/images/storefront.jpg" 
+          alt="Hideaway Coffee House Storefront" 
+          loading="eager" 
+          onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&q=80'; }} 
+        />
         <div className="hero-bg-overlay"></div>
       </div>
       <div className="container">
@@ -118,7 +123,7 @@ const About = () => {
           className="about-image"
         >
           {/* Placeholder for the barista pouring latte art */}
-          <img src="/images/barista.jpg" alt="Barista pouring latte art" onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80'; }} />
+          <img src="/images/barista.jpg" alt="Bar barista pouring latte art" loading="lazy" onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80'; }} />
         </motion.div>
         <motion.div 
           initial="hidden"
@@ -288,7 +293,7 @@ const VisualMenu = () => {
             transition={{ y: { duration: 4, repeat: Infinity, ease: "easeInOut" } }}
             className="menu-card"
           >
-            <img src="/images/breakfast_perfect.jpg" alt="Signature Breakfast" />
+            <img src="/images/breakfast_perfect.jpg" alt="Signature Breakfast" loading="lazy" />
             <h4>Breakfast</h4>
           </motion.div>
           <motion.div 
@@ -298,7 +303,7 @@ const VisualMenu = () => {
             transition={{ y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 } }}
             className="menu-card"
           >
-            <img src="/images/easter.jpg" alt="Sweet Treats" onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=400&q=80'; }} />
+            <img src="/images/easter.jpg" alt="Sweet Treats" loading="lazy" onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=400&q=80'; }} />
             <h4>Treats</h4>
           </motion.div>
           <motion.div 
@@ -308,7 +313,7 @@ const VisualMenu = () => {
             transition={{ y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 } }}
             className="menu-card"
           >
-            <img src="/images/latte.jpg" alt="Hot Drinks" onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=400&q=80'; }} />
+            <img src="/images/latte.jpg" alt="Hot Drinks" loading="lazy" onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=400&q=80'; }} />
             <h4>Hot Drinks</h4>
           </motion.div>
           <motion.div 
@@ -318,7 +323,7 @@ const VisualMenu = () => {
             transition={{ y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.5 } }}
             className="menu-card"
           >
-            <img src="/images/filter_coffee.png" alt="Filter Coffee" onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=400&q=80'; }} />
+            <img src="/images/filter_coffee.png" alt="Filter Coffee" loading="lazy" onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=400&q=80'; }} />
             <h4>Filter Coffee</h4>
           </motion.div>
           <motion.div 
@@ -328,7 +333,7 @@ const VisualMenu = () => {
             transition={{ y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 } }}
             className="menu-card"
           >
-            <img src="https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=400&q=80" alt="Fresh Juices" />
+            <img src="https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=400&q=80" alt="Fresh Juices" loading="lazy" />
             <h4>Fresh Juices</h4>
           </motion.div>
         </motion.div>
@@ -505,7 +510,7 @@ const FullMenu = () => {
                 whileHover={{ scale: 1.05 }}
                 className="menu-big-image"
               >
-                <img src={activeCategory?.image} alt={activeCategory?.title} className="animate-kenburns" />
+                <img src={activeCategory?.image} alt={activeCategory?.title} className="animate-kenburns" loading="lazy" />
               </motion.div>
             </AnimatePresence>
 
@@ -627,6 +632,7 @@ const SocialBuzz = () => {
                 muted 
                 loop 
                 playsInline
+                preload="auto"
                 onClick={(e) => {
                   const video = e.currentTarget;
                   video.muted = !video.muted;
@@ -704,8 +710,10 @@ const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
     <motion.div
       initial={{ opacity: 1 }}
       exit={{ 
-        y: "-100%",
-        transition: { duration: 1, ease: [0.76, 0, 0.24, 1] } 
+        opacity: 0,
+        scale: 1.1,
+        filter: 'blur(20px)',
+        transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } 
       }}
       className="splash-screen"
     >

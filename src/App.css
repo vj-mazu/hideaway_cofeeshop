@@ -427,6 +427,8 @@
 .full-menu {
   padding: 8rem 0;
   background-color: var(--bg-primary);
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
 }
 
 .menu-header-center {
@@ -636,6 +638,8 @@
   padding: 8rem 0;
   background-color: var(--bg-secondary);
   text-align: center;
+  content-visibility: auto;
+  contain-intrinsic-size: 600px;
 }
 
 .reels-grid {
@@ -656,6 +660,8 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
   box-shadow: 0 20px 40px rgba(0,0,0,0.4);
   transition: var(--transition-smooth);
+  transform: translateZ(0); /* Hardware acceleration to fix scrolling stutter */
+  will-change: transform;
 }
 
 .reel-video-container:hover {
@@ -703,6 +709,8 @@
 .experience {
   padding: 8rem 0;
   background-color: var(--bg-secondary);
+  content-visibility: auto;
+  contain-intrinsic-size: 400px;
 }
 
 .experience-grid {
