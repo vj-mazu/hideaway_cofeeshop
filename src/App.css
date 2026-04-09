@@ -129,6 +129,7 @@
 
 .splash-logo-version {
   transform: scale(1.1);
+  transform-origin: center center;
 }
 
 /* Consolidated Mobile Branding */
@@ -344,17 +345,27 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
   background: var(--bg-dark);
   z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 .splash-content {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 500px;
 }
 
 .splash-title {

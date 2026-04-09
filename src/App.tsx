@@ -715,10 +715,11 @@ const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
         filter: 'blur(20px)',
         transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } 
       }}
+      style={{ transformOrigin: 'center center' }}
       className="splash-screen"
     >
       <motion.div className="splash-content">
-        <Logo />
+        <Logo className="splash-logo-version" />
         <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
