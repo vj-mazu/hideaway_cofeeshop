@@ -9,8 +9,21 @@ const InstagramIcon = ({ size = 24 }: { size?: number }) => (
     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
   </svg>
 );
+const Logo = ({ className = "" }: { className?: string }) => (
+  <div className={`logo-holistic-wrapper ${className}`}>
+    <div className="logo-main-frame">
+      <div className="bracket-shape left-frame"></div>
+      <div className="logo-text-stack">
+        <div className="logo-word hide-word">H<span className="i-brand-dot">i</span>DE</div>
+        <div className="logo-word away-word">AWAY</div>
+      </div>
+      <div className="bracket-shape right-frame"></div>
+    </div>
+    <div className="logo-sub-word">COFFEE</div>
+  </div>
+);
+
 import './App.css';
-import splashVideo from './assets/videos/splash_motion.mp4';
 
 // We implement minimal components right here to ensure seamless integration and fewer file reads.
 // High quality animations via framer-motion are applied to all sections.
@@ -43,7 +56,7 @@ const Navbar = () => {
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="container nav-container">
         <div className="nav-logo">
-          <h2>HIDEAWAY <span>COFFEE HOUSE</span></h2>
+          <Logo />
         </div>
         <ul className="nav-links">
           <li><a href="#home">Home</a></li>
@@ -62,102 +75,32 @@ const Navbar = () => {
   );
 };
 
-const FloatingElements = () => {
-  // We'll use a few simple bean paths
-  const beans = Array.from({ length: 12 });
-  return (
-    <div className="floating-elements">
-      {beans.map((_, i) => (
-        <motion.div
-          key={i}
-          className="floating-bean"
-          initial={{ 
-            x: Math.random() * window.innerWidth, 
-            y: Math.random() * 800,
-            rotate: Math.random() * 360,
-            opacity: 0
-          }}
-          animate={{ 
-            y: [null, Math.random() * -100 - 50],
-            rotate: [null, Math.random() * 45 - 22],
-            opacity: [0, 0.6, 0]
-          }}
-          transition={{ 
-            duration: Math.random() * 10 + 10, 
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          style={{ scale: Math.random() * 0.5 + 0.5 }}
-        >
-          <Coffee size={Math.random() * 20 + 20} color="#3d2b1f" fill="#3d2b1f" />
-        </motion.div>
-      ))}
-    </div>
-  );
-};
-
 const Hero = () => {
   return (
     <section id="home" className="hero">
-      <div className="hero-bg-accent">HIDEAWAY</div>
-      <FloatingElements />
-      
+      <div className="hero-bg">
+        {/* Placeholder image name for the storefront picture */}
+        <img src="/images/storefront.jpg" alt="Hideaway Coffee House Storefront" onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&q=80'; }} />
+        <div className="hero-bg-overlay"></div>
+      </div>
       <div className="container">
-        <div className="hero-grid">
-          <motion.div 
-            className="hero-content"
-            initial="hidden"
-            animate="visible"
-            variants={staggerContainer}
-          >
-            <motion.div variants={fadeIn} className="hero-sound-badge" style={{ marginBottom: '1rem', color: 'var(--accent-gold)', fontWeight: 600, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent-gold)' }}></div>
-              Wakes you right up!!!
-            </motion.div>
-            <motion.h1 variants={fadeIn} className="hero-title" style={{ fontSize: 'min(5rem, 10vw)' }}>
-              Exceptional <br /><span className="heading-gold">Coffee</span> & Community
-            </motion.h1>
-            <motion.p variants={fadeIn} className="hero-desc">
-              Experience the motion of artisan craft. A premium retreat offering artisanal coffees, fresh juices, and delicious bites.
-            </motion.p>
-            <motion.div variants={fadeIn} className="hero-buttons">
-              <a href="#menu" className="btn-solid">View Menu</a>
-              <a href="https://maps.app.goo.gl/cb1HMhTrcnfDXthj9" target="_blank" rel="noreferrer" className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                Find Us <ArrowRight size={18} />
-              </a>
-            </motion.div>
+        <motion.div 
+          className="hero-content"
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+        >
+          <motion.h1 variants={fadeIn} className="hero-title">
+            Exceptional <br /><span className="heading-gold">Coffee</span> & Community
+          </motion.h1>
+          <motion.p variants={fadeIn} className="hero-desc">
+            A premium retreat offering artisanal coffees, fresh juices, and delicious bites. Step inside and let the aroma awaken your senses.
+          </motion.p>
+          <motion.div variants={fadeIn} className="hero-buttons">
+            <a href="#menu" className="btn-solid">View Menu</a>
+            <a href="https://maps.app.goo.gl/cb1HMhTrcnfDXthj9" target="_blank" rel="noreferrer" className="btn-primary">Find Us</a>
           </motion.div>
-
-          <motion.div 
-            className="hero-visuals"
-            initial={{ opacity: 0, scale: 0.8, x: 50 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 1, ease: 'easeOut' }}
-          >
-            <div className="hero-splash-card">
-              <video 
-                src={splashVideo} 
-                autoPlay 
-                muted 
-                loop 
-                playsInline 
-                className="hero-splash-video"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', padding: '2rem 1rem', textAlign: 'center' }}>
-                <h3 style={{ margin: 0, color: 'var(--accent-gold)', letterSpacing: '0.3rem', fontSize: '1rem', fontWeight: 800, textTransform: 'uppercase' }}>Hideaway Coffee House</h3>
-              </div>
-            </div>
-            
-            <motion.div 
-              style={{ position: 'absolute', top: '10%', right: '-10%', width: '150px', height: '200px', borderRadius: '100px', overflow: 'hidden', border: '4px solid var(--bg-primary)', boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}
-              animate={{ y: [0, -15, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              <img src="https://images.unsplash.com/photo-1497933321188-941f9ad36b12?q=80&w=1000&auto=format&fit=crop" alt="Coffee Beans" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </motion.div>
-          </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -408,11 +351,8 @@ const fadeUpItem: Variants = {
   visible: { 
     opacity: 1, 
     y: 0, 
-    scale: 1,
-    transition: { type: "spring", stiffness: 200, damping: 12 } 
   }
 };
-
 
 
 const slideInLeft: Variants = {
@@ -424,6 +364,8 @@ const slideInRight: Variants = {
   hidden: { opacity: 0, x: 200, rotate: 2 },
   visible: { opacity: 1, x: 0, rotate: 0, transition: { duration: 0.8, ease: "easeOut" } }
 };
+
+
 
 const menuCategories = [
   {
@@ -754,7 +696,7 @@ const Footer = ({ onPrivacyClick }: { onPrivacyClick: () => void }) => {
 
 const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
   useEffect(() => {
-    const timer = setTimeout(onComplete, 4500); // 4.5 seconds for the video experience
+    const timer = setTimeout(onComplete, 3000);
     return () => clearTimeout(timer);
   }, [onComplete]);
 
@@ -766,106 +708,43 @@ const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
         transition: { duration: 1, ease: [0.76, 0, 0.24, 1] } 
       }}
       className="splash-screen"
-      style={{ background: '#000', overflow: 'hidden' }}
     >
-      <div style={{ position: 'relative', width: '100vw', height: '100vh' }}>
-        <video 
-          src={splashVideo} 
-          autoPlay 
-          muted 
-          playsInline 
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+      <motion.div className="splash-content">
+        <Logo />
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ delay: 1, duration: 1.5, ease: "easeInOut" }}
+          style={{ height: '2px', background: 'white', marginTop: '1rem', transformOrigin: 'left' }}
         />
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 1 }}
-          style={{ position: 'absolute', bottom: '10%', left: 0, right: 0, textAlign: 'center' }}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2 }}
+          style={{ marginTop: '0.5rem', letterSpacing: '0.5em', textTransform: 'uppercase', fontSize: '0.8rem', color: 'var(--text-muted)' }}
         >
-          <h2 style={{ color: 'var(--accent-gold)', letterSpacing: '0.8rem', fontSize: '1.2rem', fontWeight: 800, textTransform: 'uppercase' }}>Hideaway Coffee House</h2>
-          <div style={{ height: '2px', width: '100px', background: 'var(--accent-gold)', margin: '1rem auto' }}></div>
-        </motion.div>
-      </div>
-    </motion.div>
-  );
-};
-
-const EntryHub = ({ onEnter }: { onEnter: () => void }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0, scale: 1.1 }}
-      transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
-      className="entry-portal"
-      style={{
-        position: 'fixed',
-        inset: 0,
-        backgroundColor: '#000',
-        zIndex: 2000,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: '2rem'
-      }}
-    >
-      <motion.h1 
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.5, duration: 1 }}
-        style={{ color: 'var(--accent-gold)', letterSpacing: '1rem', fontSize: 'min(3rem, 8vw)', textTransform: 'uppercase', fontWeight: 900 }}
-      >
-        HIDEAWAY
-      </motion.h1>
-      <motion.button
-        whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(197, 168, 124, 0.4)' }}
-        whileTap={{ scale: 0.95 }}
-        onClick={onEnter}
-        style={{
-          background: 'none',
-          border: '1px solid var(--accent-gold)',
-          color: 'var(--accent-gold)',
-          padding: '1.2rem 3rem',
-          borderRadius: '50px',
-          fontSize: '1rem',
-          letterSpacing: '0.4rem',
-          textTransform: 'uppercase',
-          fontWeight: 600,
-          cursor: 'pointer',
-          transition: 'all 0.3s ease'
-        }}
-      >
-        Enter the Experience
-      </motion.button>
+          COFFEE HOUSE
+        </motion.p>
+      </motion.div>
     </motion.div>
   );
 };
 
 function App() {
-  const [hasStarted, setHasStarted] = useState(false);
   const [loading, setLoading] = useState(true);
   const [privacyOpen, setPrivacyOpen] = useState(false);
 
   return (
     <>
       <PrivacyModal isOpen={privacyOpen} onClose={() => setPrivacyOpen(false)} />
-      
       <AnimatePresence mode="wait">
-        {!hasStarted && (
-          <EntryHub key="entry" onEnter={() => setHasStarted(true)} />
-        )}
-
-        {hasStarted && loading && (
-          <SplashScreen key="splash" onComplete={() => setLoading(false)} />
-        )}
+        {loading && <SplashScreen onComplete={() => setLoading(false)} />}
       </AnimatePresence>
-
-      {hasStarted && !loading && (
+      {!loading && (
         <motion.div 
-          initial={{ opacity: 0, filter: 'blur(20px)' }} 
+          initial={{ opacity: 0, filter: 'blur(10px)' }} 
           animate={{ opacity: 1, filter: 'blur(0px)' }} 
-          transition={{ duration: 1.5, ease: 'easeOut' }} 
+          transition={{ duration: 1.2 }} 
           className="app-container"
         >
           <Navbar />
