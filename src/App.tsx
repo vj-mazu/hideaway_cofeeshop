@@ -10,16 +10,12 @@ const InstagramIcon = ({ size = 24 }: { size?: number }) => (
   </svg>
 );
 const Logo = ({ className = "" }: { className?: string }) => (
-  <div className={`logo-holistic-wrapper ${className}`}>
-    <div className="logo-main-frame">
-      <div className="bracket-shape left-frame"></div>
-      <div className="logo-text-stack">
-        <div className="logo-word hide-word">H<span className="i-brand-dot">i</span>DE</div>
-        <div className="logo-word away-word">AWAY</div>
-      </div>
-      <div className="bracket-shape right-frame"></div>
-    </div>
-    <div className="logo-sub-word">COFFEE</div>
+  <div className={`logo-official-wrapper ${className}`}>
+    <img 
+      src="/images/brand_logo_official.png" 
+      alt="Hideaway Coffee House" 
+      className="logo-image-main"
+    />
   </div>
 );
 

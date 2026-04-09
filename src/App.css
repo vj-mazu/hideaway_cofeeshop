@@ -11,12 +11,12 @@
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 1.5rem 0;
+  padding: 1.8rem 0; /* Increased for breathing room */
   transition: var(--transition-smooth);
 }
 
 .navbar.scrolled {
-  padding: 1rem 0;
+  padding: 1.2rem 0; /* Increased for breathing room */
   background: rgba(18, 14, 12, 0.9);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -35,109 +35,47 @@
 }
 
 /* DEFINITIVE BRAND LOGO - ISOLATED BRACKET VERSION */
-.logo-holistic-wrapper {
+.logo-official-wrapper {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background: transparent !important;
-  backface-visibility: hidden;
-  -webkit-font-smoothing: antialiased;
-  transform: translateZ(0); /* Hardware acceleration to fix 'border' scale artifacts */
+  animation: brand-float 6s ease-in-out infinite; /* Premium floating effect */
 }
 
-/* GLOBAL LOGO PURGE - Kills all 'double coloring' boxes */
-.logo-holistic-wrapper *,
-.nav-logo,
-.splash-content {
-  background: transparent !important;
-  background-color: transparent !important;
-  border-color: transparent; /* Remove any rogue borders */
+@keyframes brand-float {
+  0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 15px rgba(255,255,255,0.05)); }
+  50% { transform: translateY(-8px); filter: drop-shadow(0 10px 25px rgba(255,255,255,0.15)); }
 }
 
-.logo-main-frame {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 32px; /* Balanced spacing */
-  transition: var(--transition-smooth);
-}
-
-.bracket-shape {
-  width: 24px;
-  height: 82px; /* Precision alignment with HIDE AWAY */
-  border-style: solid;
-  border-color: white;
-  border-width: 0;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.15); /* Minimal, clean neon glow */
-  opacity: 0.95;
-}
-
-.left-frame {
-  border-width: 2px 0 2px 2px; /* Single stroke 2px line */
-}
-
-.right-frame {
-  border-width: 2px 2px 2px 0; /* Single stroke 2px line */
-}
-
-.logo-text-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  color: #ffffff;
-  font-family: 'Inter', sans-serif;
-  background: transparent !important;
-}
-
-.logo-word {
-  font-size: 2.5rem;
-  font-weight: 700;
-  letter-spacing: 0.2em; /* Premium spacing */
-  line-height: 0.85;
-  text-transform: uppercase;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.25); /* Subtle neon glow */
-  background: transparent !important;
-}
-
-.i-brand-dot {
-  text-transform: lowercase;
-  font-size: 0.95em;
-  vertical-align: baseline;
-}
-
-.logo-sub-word {
-  font-size: 0.95rem;
-  letter-spacing: 0.8em;
-  font-weight: 400;
-  margin-top: 18px; /* Balanced offset */
-  opacity: 0.9;
-  color: #ffffff;
-  text-transform: uppercase;
-  font-family: 'Inter', sans-serif;
-  background: transparent !important;
+.logo-image-main {
+  width: 100%;
+  max-width: 320px; /* Reference brand scale */
+  aspect-ratio: 1 / 1; /* Force perfect square proportions */
+  height: auto;
+  display: block;
+  border-radius: 50%; /* Mask any square corners into a pure circle */
+  object-fit: cover; /* Fill the circle mask completely */
+  transform: scale(1.08); /* Zoom in slightly to hide black line artifacts at the edges */
+  background-color: #ffffff; /* Safety background for the white brand identity */
+  image-rendering: -webkit-optimize-contrast;
 }
 
 /* Scaling */
 .nav-logo-version {
-  transform: scale(0.35);
+  transform: scale(0.18) !important; /* Significantly reduced to eliminate overlap */
   transform-origin: center center;
+  margin-top: -10px; /* Shift up slightly for better alignment */
 }
 
 .splash-logo-version {
-  transform: scale(1.1);
+  transform: scale(1); /* Full size for splash */
   transform-origin: center center;
 }
 
 /* Consolidated Mobile Branding */
 @media (max-width: 768px) {
-  .logo-main-frame { gap: 15px; }
-  .bracket-shape { height: 65px; width: 18px; }
-  .logo-word { font-size: 1.8rem; }
-  .logo-sub-word { font-size: 0.7rem; }
+  .logo-image-main { max-width: 280px; }
   .nav-logo-version { transform: scale(0.32); }
 }
 
@@ -228,6 +166,7 @@
 
 .hero-content {
   max-width: 600px;
+  padding-top: 5rem; /* Additional breathing room */
 }
 
 .hero-title {
