@@ -62,21 +62,20 @@
 }
 
 /* Scaling */
-.nav-logo-version {
-  transform: scale(0.18) !important; /* Significantly reduced to eliminate overlap */
-  transform-origin: center center;
-  margin-top: -10px; /* Shift up slightly for better alignment */
+.nav-logo .logo-official-wrapper {
+  animation: none; /* No float in navbar */
 }
 
-.splash-logo-version {
-  transform: scale(1); /* Full size for splash */
-  transform-origin: center center;
+.nav-logo .logo-image-main {
+  max-width: 55px;
+  border: 1.5px solid rgba(203, 168, 134, 0.3);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  transform: scale(1);
 }
 
 /* Consolidated Mobile Branding */
 @media (max-width: 768px) {
-  .logo-image-main { max-width: 280px; }
-  .nav-logo-version { transform: scale(0.32); }
+  .nav-logo .logo-image-main { max-width: 45px; }
 }
 
 .nav-links {
@@ -287,7 +286,7 @@
   width: 100vw !important;
   height: 100vh !important;
   height: 100dvh !important;
-  background: var(--bg-dark);
+  background: radial-gradient(ellipse at center, #1a1512 0%, #0a0806 70%, #050403 100%);
   z-index: 9999;
   display: flex !important;
   justify-content: center !important;
@@ -295,6 +294,31 @@
   overflow: hidden;
   margin: 0;
   padding: 0;
+}
+
+/* Floating ambient particles */
+.splash-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.splash-particle {
+  position: absolute;
+  background: radial-gradient(circle, rgba(203, 168, 134, 0.6), transparent);
+  border-radius: 50%;
+  animation: particleFloat 5s ease-in-out infinite alternate;
+  opacity: 0;
+}
+
+@keyframes particleFloat {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  50% { opacity: 0.6; }
+  100% { transform: translateY(-80px) scale(1.2); opacity: 0; }
 }
 
 .splash-content {
@@ -305,15 +329,152 @@
   justify-content: center;
   width: 100%;
   max-width: 500px;
+  position: relative;
+  z-index: 1;
 }
 
-.splash-title {
-  color: var(--text-light);
-  font-size: clamp(3rem, 10vw, 6rem);
-  font-weight: 700;
-  letter-spacing: 0.1em;
+/* Golden animated ring around logo */
+.splash-logo-ring {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.splash-ring-glow {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: all 1.2s ease;
+}
+
+.splash-ring-glow.active {
+  border-color: var(--accent-gold);
+  box-shadow:
+    0 0 20px rgba(203, 168, 134, 0.3),
+    0 0 60px rgba(203, 168, 134, 0.15),
+    inset 0 0 20px rgba(203, 168, 134, 0.1);
+  animation: ringPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes ringPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(203,168,134,0.3), 0 0 60px rgba(203,168,134,0.15), inset 0 0 20px rgba(203,168,134,0.1); }
+  50% { box-shadow: 0 0 35px rgba(203,168,134,0.5), 0 0 80px rgba(203,168,134,0.25), inset 0 0 30px rgba(203,168,134,0.15); }
+}
+
+/* Logo container inside ring */
+.splash-logo-container {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+.splash-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+/* Shimmer sweep over logo */
+.splash-logo-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 40%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.15) 60%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.splash-logo-shimmer.active {
+  opacity: 1;
+  animation: logoShimmerSweep 2s ease-in-out 0.3s;
+}
+
+@keyframes logoShimmerSweep {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* Tagline row with decorative lines */
+.splash-tagline {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 0.4rem;
+}
+
+.splash-tag-line-deco {
+  display: block;
+  width: 50px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+}
+
+.splash-tag-text {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  color: var(--text-primary);
   margin: 0;
+}
+
+.splash-subtitle {
+  letter-spacing: 0.5em;
   text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Progress bar */
+.splash-progress-track {
+  width: 120px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 2rem;
+}
+
+.splash-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-gold), #e6c89c);
+  border-radius: 2px;
+  transform-origin: left;
+  box-shadow: 0 0 8px rgba(203, 168, 134, 0.5);
+}
+
+/* Mobile splash adjustments */
+@media (max-width: 768px) {
+  .splash-logo-ring { width: 180px; height: 180px; }
+  .splash-logo-container { width: 160px; height: 160px; }
+  .splash-tag-text { font-size: 1.3rem; letter-spacing: 0.25em; }
+  .splash-tag-line-deco { width: 35px; }
 }
 
 /* VISUAL MENU SECTION */

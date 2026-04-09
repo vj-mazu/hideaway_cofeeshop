@@ -12,7 +12,7 @@ const InstagramIcon = ({ size = 24 }: { size?: number }) => (
 const Logo = ({ className = "" }: { className?: string }) => (
   <div className={`logo-official-wrapper ${className}`}>
     <img 
-      src="/images/brand_logo_official.png" 
+      src="/images/hideaway_logo.jpg" 
       alt="Hideaway Coffee House" 
       className="logo-image-main"
     />
@@ -697,39 +697,110 @@ const Footer = ({ onPrivacyClick }: { onPrivacyClick: () => void }) => {
 };
 
 const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
+  const [stage, setStage] = useState(0);
+
   useEffect(() => {
-    const timer = setTimeout(onComplete, 3000);
-    return () => clearTimeout(timer);
+    // Stage 0: initial (logo hidden)
+    // Stage 1: logo appears (0.3s)
+    // Stage 2: ring glows (1s)
+    // Stage 3: text appears (1.8s)
+    // Stage 4: progress bar (2.2s)
+    // Complete at 4s
+    const t1 = setTimeout(() => setStage(1), 300);
+    const t2 = setTimeout(() => setStage(2), 1000);
+    const t3 = setTimeout(() => setStage(3), 1800);
+    const t4 = setTimeout(() => setStage(4), 2200);
+    const done = setTimeout(onComplete, 4200);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(done); };
   }, [onComplete]);
 
   return (
     <motion.div
       initial={{ opacity: 1 }}
-      exit={{ 
+      exit={{
         opacity: 0,
-        scale: 1.1,
-        filter: 'blur(20px)',
-        transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } 
+        scale: 1.15,
+        filter: 'blur(30px)',
+        transition: { duration: 1, ease: [0.76, 0, 0.24, 1] }
       }}
       style={{ transformOrigin: 'center center' }}
       className="splash-screen"
     >
+      {/* Ambient particles */}
+      <div className="splash-particles">
+        {[...Array(20)].map((_, i) => (
+          <div key={i} className="splash-particle" style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 5}s`,
+            animationDuration: `${3 + Math.random() * 4}s`,
+            width: `${2 + Math.random() * 4}px`,
+            height: `${2 + Math.random() * 4}px`,
+          }} />
+        ))}
+      </div>
+
       <motion.div className="splash-content">
-        <Logo className="splash-logo-version" />
+        {/* Animated golden ring */}
         <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ delay: 1, duration: 1.5, ease: "easeInOut" }}
-          style={{ height: '2px', background: 'white', marginTop: '1rem', transformOrigin: 'left' }}
-        />
+          className="splash-logo-ring"
+          initial={{ scale: 0.6, opacity: 0, rotate: -180 }}
+          animate={stage >= 1 ? { scale: 1, opacity: 1, rotate: 0 } : {}}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className={`splash-ring-glow ${stage >= 2 ? 'active' : ''}`} />
+          
+          {/* Logo image */}
+          <motion.div
+            className="splash-logo-container"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={stage >= 1 ? { scale: 1, opacity: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.34, 1.56, 0.64, 1] }}
+          >
+            <img
+              src="/images/hideaway_logo.jpg"
+              alt="Hideaway Coffee House"
+              className="splash-logo-img"
+            />
+            <div className={`splash-logo-shimmer ${stage >= 2 ? 'active' : ''}`} />
+          </motion.div>
+        </motion.div>
+
+        {/* Tagline */}
+        <motion.div
+          className="splash-tagline"
+          initial={{ opacity: 0, y: 30 }}
+          animate={stage >= 3 ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
+          <span className="splash-tag-line-deco" />
+          <p className="splash-tag-text">HIDEAWAY</p>
+          <span className="splash-tag-line-deco" />
+        </motion.div>
+
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2 }}
-          style={{ marginTop: '0.5rem', letterSpacing: '0.5em', textTransform: 'uppercase', fontSize: '0.8rem', color: 'var(--text-muted)' }}
+          className="splash-subtitle"
+          initial={{ opacity: 0, y: 20 }}
+          animate={stage >= 3 ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.15, ease: 'easeOut' }}
         >
           COFFEE HOUSE
         </motion.p>
+
+        {/* Loading bar */}
+        <motion.div
+          className="splash-progress-track"
+          initial={{ opacity: 0 }}
+          animate={stage >= 4 ? { opacity: 1 } : {}}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.div
+            className="splash-progress-fill"
+            initial={{ scaleX: 0 }}
+            animate={stage >= 4 ? { scaleX: 1 } : {}}
+            transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
+          />
+        </motion.div>
       </motion.div>
     </motion.div>
   );
